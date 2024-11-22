@@ -1,0 +1,54 @@
+/* Fuente MONTSERRAT*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+/* Estilo universal */
+*{
+    font-family: "Montserrat", sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Aspectos del menu */
+.menu{
+
+    position: fixed;
+    top:0;
+
+    height: 80px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #43b0f1;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0,0.3);
+    
+}
+
+.menu p{
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+    margin-right:20px;
+}
+
+.menu img {
+    width: 45px; 
+    animation: giro 15s infinite ease-in-out ;
+}
+
+@keyframes giro {
+    0% {
+        transform: rotate(0deg);
+    }
+    12% {
+        transform: rotate(360deg); 
+    }
+    100% {
+        transform: rotate(360deg); 
+    }
+}
