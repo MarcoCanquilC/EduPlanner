@@ -3,7 +3,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from models import Evento  # Cambia "app" por el nombre de tu app
+from .models import Evento
 from .serializers import EventoSerializer
 from .services import obtener_feriados
 

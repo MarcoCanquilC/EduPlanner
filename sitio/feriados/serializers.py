@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import Evento  # Cambia "app" por el nombre de tu app
+from .models import Evento
 
 class EventoSerializer(serializers.ModelSerializer):
     class Meta:
