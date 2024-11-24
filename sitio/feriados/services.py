@@ -1,15 +1,15 @@
 import requests
 
-def obtener_feriados_chile(api_key, year):
+def obtener_feriados(year):
     
     url = f"https://calendarific.com/api/v2/holidays"
     
     params = {
-        "api_key": api_key,
+        "api_key": None,
         "country": "CL",  
         "year": year,
         "type": "national" , 
-        "language": "es"  # Configura el idioma en español
+        "language": "es"
     }
    
     response = requests.get(url, params=params)
