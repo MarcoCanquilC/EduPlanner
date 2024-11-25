@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     var feriados = calendarioData.feriados.map(feriado => ({
         id: "feriado_nacional",                       //ID genérico para feriados nacionales.
         type: "Feriado Nacional",                     //Tipo amigable.
-        title: `Feriado Nacional: ${feriado.nombre}`, //Título mostrado en el calendario.
+        title: feriado.nombre,                        //Título mostrado en el calendario.
         originalTitle: feriado.nombre,                //Título original del feriado.
         start: feriado.fecha,                         //Fecha del feriado.
         color: "green",                               //Color para feriados nacionales.
@@ -86,11 +86,20 @@ document.addEventListener("DOMContentLoaded", async function () {
         locale: "es",
         initialView: "dayGridMonth",
         events: allEvents,
+        headerToolbar: {
+            left: "prev,next,today", // Botones a la izquierda.
+            center: "title", // El título se centra.
+            right: "dayGridMonth,timeGridWeek,timeGridDay" // Botones a la derecha.
+        },
+        titleFormat: { // Personalización del formato del título.
+            year: "numeric", // Muestra el año completo.
+            month: "long" // Muestra el nombre completo del mes.
+        },
         eventClick: function (info) {
 
             const tipo = info.event.extendedProps.type || "Otro";                          //Tipo del evento.
             const titulo = info.event.extendedProps.originalTitle || info.event.title;     //Título original.
-            const descripcion = info.event.extendedProps.description || "Sin descripción"; //Descripción.
+            const descripcion = info.event.extendedProps.description || "Sin descripción."; //Descripción.
 
             dialogTitle.textContent = tipo;                                //Encabezado del cuadro de diálogo.
             dialogEvent.textContent = `Evento: ${titulo}`;                 //Título del evento.
@@ -99,6 +108,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             dialog.style.display = "flex";                                 //Mostrar el cuadro de diálogo.
         }
     });
+    
 
     //Renderizar el calendario.
     calendar.render();
