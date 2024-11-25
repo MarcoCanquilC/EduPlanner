@@ -3,6 +3,7 @@ from django.utils.html import format_html
 from .models import Evento, Feriado
 
 class EventoAdmin(admin.ModelAdmin):
+    
     list_display = ('titulo', 'tipo', 'fecha_inicio', 'fecha_fin', 'estado')
     search_fields = ('titulo', 'tipo')
     list_filter = ('tipo', 'estado')

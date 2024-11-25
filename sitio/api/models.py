@@ -48,18 +48,6 @@ class Evento(models.Model):
     def __str__(self):
         return self.titulo
     
-    
-    def save(self, *args, **kwargs):
-        
-        feriados = Feriado.objects.filter(fecha__range=[self.fecha_inicio, self.fecha_fin])
-
-        if feriados.exists():
-            self.conflicto_con_feriado = "Conflicto con los siguientes feriados: " + ", ".join([f"{feriado.nombre} ({feriado.fecha})" for feriado in feriados])
-        else:
-            self.conflicto_con_feriado = None  # Si no hay conflicto
-
-        super().save(*args, **kwargs)
-
 
 class Feriado(models.Model):
    
