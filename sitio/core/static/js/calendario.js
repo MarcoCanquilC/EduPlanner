@@ -87,13 +87,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         initialView: "dayGridMonth",
         events: allEvents,
         headerToolbar: {
-            left: "prev,next,today", // Botones a la izquierda.
-            center: "title", // El título se centra.
-            right: "dayGridMonth,timeGridWeek,timeGridDay" // Botones a la derecha.
+            left: "prev,next,today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay"
         },
-        titleFormat: { // Personalización del formato del título.
-            year: "numeric", // Muestra el año completo.
-            month: "long" // Muestra el nombre completo del mes.
+        titleFormat: {
+            year: "numeric",
+            month: "long"
         },
         eventClick: function (info) {
 
