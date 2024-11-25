@@ -27,7 +27,7 @@ def calendario_academico(request):
         {
             "nombre": feriado.nombre,
             "fecha": feriado.fecha,
-            "region": feriado.region,
+            
         }
         for feriado in feriados
     ]

@@ -21,14 +21,14 @@ def obtener_feriados():
             try:
                 nombre = feriado.get("name", "")
                 fecha = feriado.get("date", {}).get("iso", "")
-                region = feriado.get("region", None)  
+                 
 
               
                 if fecha:
                     Feriado.objects.get_or_create(
                         nombre=nombre,
                         fecha=fecha.split("T")[0],  
-                        region=region 
+                       
                     )
                     
             except Exception as e:
