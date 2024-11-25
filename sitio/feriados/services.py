@@ -5,11 +5,11 @@ def obtener_feriados(year):
     url = f"https://calendarific.com/api/v2/holidays"
     
     params = {
-        "api_key": None,
+        "api_key": "Gl7GhLSWWMgW3yq7mbwCOqkRvLEADGcb",
         "country": "CL",  
         "year": year,
         "type": "national" , 
-        "language": "es"
+        
     }
    
     response = requests.get(url, params=params)

@@ -1,10 +1,9 @@
-from services import obtener_feriados_chile
+from services import obtener_feriados
 
-api_key = "Gl7GhLSWWMgW3yq7mbwCOqkRvLEADGcb"
 year = 2024
 
 try:
-    feriados = obtener_feriados_chile(api_key, year)
+    feriados = obtener_feriados( year)
     for feriado in feriados:
         print(f"Nombre: {feriado['name']}, Fecha: {feriado['date']['iso']}")
 except Exception as e:
