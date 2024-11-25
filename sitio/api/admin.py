@@ -4,9 +4,9 @@ from .models import Evento, Feriado
 
 class EventoAdmin(admin.ModelAdmin):
     
-    list_display = ('titulo', 'tipo', 'fecha_inicio', 'fecha_fin', 'estado')
-    search_fields = ('titulo', 'tipo')
-    list_filter = ('tipo', 'estado')
+    list_display = ("titulo", "tipo", "fecha_inicio", "fecha_fin", "estado")
+    search_fields = ("titulo", "tipo")
+    list_filter = ("tipo", "estado")
 
     
     def save_model(self, request, obj, form, change):
@@ -16,7 +16,7 @@ class EventoAdmin(admin.ModelAdmin):
         if feriados.exists():
            
             conflicto = "El evento tiene un conflicto con los siguientes feriados: " + ", ".join([f"{feriado.nombre} ({feriado.fecha})" for feriado in feriados])
-            self.message_user(request, conflicto, level='WARNING')  
+            self.message_user(request, conflicto, level="WARNING")  
 
         obj.save()
 

@@ -5,7 +5,7 @@ from .models import Evento, Feriado
 def calendario_academico(request):
     
     # Filtrar los eventos excluyendo los que están con estado 'pendiente' o 'rechazado'
-    eventos = Evento.objects.exclude(estado__in=['pendiente', 'rechazado'])
+    eventos = Evento.objects.exclude(estado__in=["pendiente", "rechazado"])
     
     feriados = Feriado.objects.all()
 
@@ -17,7 +17,7 @@ def calendario_academico(request):
             "fecha_inicio": evento.fecha_inicio,
             "fecha_fin": evento.fecha_fin,
             "tipo": evento.tipo,
-            "estado": evento.estado,
+            "estado": evento.estado
         }
         for evento in eventos
     ]
@@ -26,8 +26,7 @@ def calendario_academico(request):
     feriados_data = [
         {
             "nombre": feriado.nombre,
-            "fecha": feriado.fecha,
-            
+            "fecha": feriado.fecha
         }
         for feriado in feriados
     ]
