@@ -1,11 +1,16 @@
 from django.db import models
 
+# Create your models here.
+
 class Evento(models.Model):
+    
     TIPOS_EVENTOS = [
         ("EXAMEN", "Examen"),
         ("FERIADO", "Feriado"),
         ("PLAZO", "Plazo Administrativo"),
+        
     ]
+
     titulo = models.CharField(max_length=200)
     descripcion = models.TextField()
     fecha_inicio = models.DateField()

@@ -3,10 +3,11 @@ from django.db import models
 class Evento(models.Model):
     
     TIPO_EVENTO = [
-        ('feriado', 'Feriado'),
+
         ('examen', 'Examen'),
         ('plazo', 'Plazo administrativo'),
         ('actividad', 'Actividad general'),
+        
     ]
 
     titulo = models.CharField(max_length=200)
