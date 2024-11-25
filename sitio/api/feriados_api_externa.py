@@ -1,24 +1,37 @@
 import requests
+from .models import Feriado
 
-def obtener_feriados(year):
+def obtener_feriados():
+    url = "https://calendarific.com/api/v2/holidays"
     
-    url = f"https://calendarific.com/api/v2/holidays"
-    
-    params = {
-        "api_key": "Gl7GhLSWWMgW3yq7mbwCOqkRvLEADGcb",
-        "country": "CL",  
-        "year": year,
-        "type": "national" , 
-        
+    parametros = {
+        "api_key": "Gl7GhLSWWMgW3yq7mbwCOqkRvLEADGcb",  # Tu API Key
+        "country": "CL",  # País (Chile en este caso)
+        "year": 2024,  # Año
     }
-   
-    response = requests.get(url, params=params)
 
-    if response.status_code == 200:
-        data = response.json()
-        holidays = data.get("response", {}).get("holidays", [])
-        return holidays
+    respuesta = requests.get(url, params=parametros)
+
+    if respuesta.status_code == 200:
+        datos = respuesta.json()
+        feriados = datos.get("response", {}).get("holidays", [])
+        
+      
+        for feriado in feriados:
+            try:
+                nombre = feriado.get("name", "")
+                fecha = feriado.get("date", {}).get("iso", "")
+                region = feriado.get("region", None)  
+
+              
+                if fecha:
+                    Feriado.objects.get_or_create(
+                        nombre=nombre,
+                        fecha=fecha.split("T")[0],  
+                        region=region 
+                    )
+                    
+            except Exception as e:
+                print(f"Error al guardar el feriado {feriado.get('name')}: {e}")
     else:
-        raise Exception(f"Error al obtener feriados: {response.status_code}")
-    
-
+        raise Exception(f"Error al obtener feriados: {respuesta.status_code}")
