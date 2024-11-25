@@ -1,4 +1,4 @@
-// Diccionario para mapear los tipos de eventos a títulos amigables
+//Diccionario para mapear los tipos de eventos a títulos amigables.
 const tipoEventosMap = {
     "inicio_semestre": "Inicio de Semestre",
     "fin_semestre": "Fin de Semestre",
@@ -24,10 +24,11 @@ const tipoEventosMap = {
 };
 
 document.addEventListener("DOMContentLoaded", async function () {
+
     var calendarEl = document.getElementById("calendar");
     var filterSelect = document.getElementById("filter-select");
 
-    // Crear elementos del cuadro de diálogo
+    //Crear elementos para el cuadro de diálogo.
     const dialogOverlay = document.createElement("div");
     const dialog = document.createElement("div");
     const dialogTitle = document.createElement("h3");
@@ -35,11 +36,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     const dialogDescription = document.createElement("p");
     const closeButton = document.createElement("button");
 
+    //Estilos e identificadores para el cuadro de diálogo.
     dialogOverlay.id = "dialog-overlay";
     dialog.classList.add("dialog");
     closeButton.textContent = "Cerrar";
 
-    // Añadir elementos al diálogo
+    //Añadir elementos al cuadro de diálogo.
     dialog.appendChild(dialogTitle);
     dialog.appendChild(dialogEvent);
     dialog.appendChild(dialogDescription);
@@ -47,86 +49,86 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.body.appendChild(dialogOverlay);
     document.body.appendChild(dialog);
 
-    // Cargar datos desde la API
+    //Cargar datos desde la API.
     const calendarioData = await (await fetch("http://127.0.0.1:8000/api/calendario/")).json();
 
-    // Procesar feriados nacionales
+    //Procesar feriados nacionales.
     var feriados = calendarioData.feriados.map(feriado => ({
-        id: "feriado_nacional",
-        type: "Feriado Nacional",
-        title: `Feriado Nacional: ${feriado.nombre}`, // Título combinado
-        originalTitle: feriado.nombre, // Título original
-        start: feriado.fecha,
-        color: "green",
-        allDay: true
+        id: "feriado_nacional",                       //ID genérico para feriados nacionales.
+        type: "Feriado Nacional",                     //Tipo amigable.
+        title: `Feriado Nacional: ${feriado.nombre}`, //Título mostrado en el calendario.
+        originalTitle: feriado.nombre,                //Título original del feriado.
+        start: feriado.fecha,                         //Fecha del feriado.
+        color: "green",                               //Color para feriados nacionales.
+        allDay: true                                  //Feriados ocupan todo el día.
     }));
 
-    // Procesar eventos académicos
+    //Procesar eventos académicos.
     var eventos = calendarioData.eventos.map(evento => {
-        const tipoAmigable = tipoEventosMap[evento.tipo] || "Otro";
+        const tipoAmigable = tipoEventosMap[evento.tipo] || "Otro"; 
         return {
-            id: evento.tipo,
-            type: tipoAmigable, // Tipo amigable
-            title: `${tipoAmigable}: ${evento.titulo}`, // Título combinado
-            originalTitle: evento.titulo, // Título original
-            start: evento.fecha_inicio,
-            end: evento.fecha_fin,
-            description: evento.descripcion,
-            color: evento.tipo === "suspension_completa" ? "red" : "blue"
+            id: evento.tipo,                                              //Tipo del evento.
+            type: tipoAmigable,                                           //Tipo amigable.
+            title: `${tipoAmigable}: ${evento.titulo}`,                   //Título mostrado en el calendario.
+            originalTitle: evento.titulo,                                 //Título original del evento.
+            start: evento.fecha_inicio,                                   //Fecha de inicio del evento.
+            end: evento.fecha_fin,                                        //Fecha de fin del evento.
+            description: evento.descripcion,                              //Descripción del evento.
+            color: "blue"
         };
     });
 
-    // Combinar todos los eventos
+    //Combinar feriados y eventos en una lista única.
     var allEvents = [...feriados, ...eventos];
 
-    // Inicializar el calendario con todos los eventos
+    //Inicializar el calendario con todos los eventos.
     var calendar = new FullCalendar.Calendar(calendarEl, {
         locale: "es",
         initialView: "dayGridMonth",
         events: allEvents,
         eventClick: function (info) {
-            // Mostrar el cuadro de diálogo con los detalles del evento
-            const tipo = info.event.extendedProps.type || "Otro";
-            const titulo = info.event.extendedProps.originalTitle || info.event.title;
-            const descripcion = info.event.extendedProps.description || "Sin descripción";
 
-            dialogTitle.textContent = tipo;
-            dialogEvent.textContent = `Evento: ${titulo}`;
-            dialogDescription.textContent = `Descripción: ${descripcion}`;
-            dialogOverlay.style.display = "block";
-            dialog.style.display = "flex";
+            const tipo = info.event.extendedProps.type || "Otro";                          //Tipo del evento.
+            const titulo = info.event.extendedProps.originalTitle || info.event.title;     //Título original.
+            const descripcion = info.event.extendedProps.description || "Sin descripción"; //Descripción.
+
+            dialogTitle.textContent = tipo;                                //Encabezado del cuadro de diálogo.
+            dialogEvent.textContent = `Evento: ${titulo}`;                 //Título del evento.
+            dialogDescription.textContent = `Descripción: ${descripcion}`; //Descripción del evento.
+            dialogOverlay.style.display = "block";                         //Mostrar el fondo oscuro.
+            dialog.style.display = "flex";                                 //Mostrar el cuadro de diálogo.
         }
     });
 
+    //Renderizar el calendario.
     calendar.render();
 
-    // Cerrar el cuadro de diálogo
+
+    //Cerrar el cuadro de diálogo al hacer clic en el botón.
     closeButton.addEventListener("click", function () {
         dialogOverlay.style.display = "none";
         dialog.style.display = "none";
     });
 
-    // Obtener categorías únicas (Feriado Nacional + tipos de eventos académicos)
+    //Obtener categorías únicas (Feriado Nacional + tipos de eventos académicos).
     const categoriasUnicas = ["Feriado Nacional", ...new Set(eventos.map(evento => evento.type))];
 
-    // Rellenar el combobox con las categorías
+    //Rellenar el combobox con las categorías.
     categoriasUnicas.forEach(categoria => {
-        const option = document.createElement("option");
-        option.value = categoria;
-        option.textContent = categoria;
-        filterSelect.appendChild(option);
+        const option = document.createElement("option"); //Crear opción.
+        option.value = categoria;                        //Valor de la opción.
+        option.textContent = categoria;                  //Texto mostrado.
+        filterSelect.appendChild(option);                //Añadir opción al select.
     });
 
-    // Manejar el cambio de filtro
+    //Filtrar eventos según la categoría seleccionada.
     filterSelect.addEventListener("change", function () {
         const filter = this.value;
-
-        // Filtrar eventos según la categoría seleccionada
         const filteredEvents = allEvents.filter(evento => {
             return filter === "all" || evento.type === filter;
         });
 
-        // Actualizar el calendario con los eventos filtrados
+        //Eliminar eventos actuales y agrega los eventos filtrados.
         calendar.removeAllEvents();
         calendar.addEventSource(filteredEvents);
     });

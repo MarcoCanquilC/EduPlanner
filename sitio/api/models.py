@@ -1,12 +1,12 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-# Create your models here.
 
+#Clase EVENTO.
 class Evento(models.Model):
     
+    #Lista de los posibles tipos de eventos.
     TIPOS_EVENTOS = [
-
         ("inicio_semestre", "Inicio de Semestre"),
         ("fin_semestre", "Fin de Semestre"),
         ("inicio_inscripcion", "Inicio de Inscripción de Asignaturas"),
@@ -46,12 +46,11 @@ class Evento(models.Model):
     def __str__(self):
         return self.titulo
     
-
+#Clase FERIADO.
 class Feriado(models.Model):
    
     nombre = models.CharField(max_length=255)
     fecha = models.DateField()
-
 
     def __str__(self):
         return f"{self.nombre} - {self.fecha}"

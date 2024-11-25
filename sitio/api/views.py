@@ -4,12 +4,12 @@ from .models import Evento, Feriado
 
 def calendario_academico(request):
     
-    # Filtrar los eventos excluyendo los que están con estado 'pendiente' o 'rechazado'
+    #Filtrar los eventos excluyendo los que están con estado "pendiente" o "rechazado".
     eventos = Evento.objects.exclude(estado__in=["pendiente", "rechazado"])
     
     feriados = Feriado.objects.all()
 
-    # Obtener los datos de los eventos filtrados
+    #Creamos la DATA de los eventos.
     eventos_data = [
         {
             "titulo": evento.titulo,
@@ -22,7 +22,7 @@ def calendario_academico(request):
         for evento in eventos
     ]
     
-    # Obtener los datos de los feriados
+    #Creamos la DATA para feriados.
     feriados_data = [
         {
             "nombre": feriado.nombre,
@@ -31,10 +31,11 @@ def calendario_academico(request):
         for feriado in feriados
     ]
 
-    # Consolidar ambos en un solo JSON
+    #Consolidar ambos en un solo JSON.
     calendario = {
         "eventos": eventos_data,
         "feriados": feriados_data
     }
 
+    #Retornamos lo creado.
     return JsonResponse(calendario)
