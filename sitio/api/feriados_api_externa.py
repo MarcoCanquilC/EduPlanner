@@ -5,9 +5,9 @@ def obtener_feriados():
     url = "https://calendarific.com/api/v2/holidays"
     
     parametros = {
-        "api_key": "Gl7GhLSWWMgW3yq7mbwCOqkRvLEADGcb",  # Tu API Key
-        "country": "CL",  # País (Chile en este caso)
-        "year": 2024,  # Año
+        "api_key": "Gl7GhLSWWMgW3yq7mbwCOqkRvLEADGcb", 
+        "country": "CL",  
+        "year": 2024,  
     }
 
     respuesta = requests.get(url, params=parametros)

@@ -1,10 +1,24 @@
 from django.contrib import admin
-# Register your models here.
-from .models import  Evento
+from django.utils.html import format_html
+from .models import Evento, Feriado
 
-# Register your models here.
-@admin.register(Evento)
 class EventoAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'tipo', 'fecha_inicio', 'fecha_fin')
-    list_filter = ('tipo',)
-    search_fields = ('titulo', 'descripcion')
+    list_display = ('titulo', 'tipo', 'fecha_inicio', 'fecha_fin', 'estado')
+    search_fields = ('titulo', 'tipo')
+    list_filter = ('tipo', 'estado')
+
+    
+    def save_model(self, request, obj, form, change):
+        
+        feriados = Feriado.objects.filter(fecha__range=[obj.fecha_inicio, obj.fecha_fin])
+
+        if feriados.exists():
+           
+            conflicto = "El evento tiene un conflicto con los siguientes feriados: " + ", ".join([f"{feriado.nombre} ({feriado.fecha})" for feriado in feriados])
+            self.message_user(request, conflicto, level='WARNING')  
+
+        obj.save()
+
+        super().save_model(request, obj, form, change)
+
+admin.site.register(Evento, EventoAdmin)
