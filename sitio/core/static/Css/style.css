@@ -53,7 +53,8 @@
 
 /* Calendario */
 #calendar {
-    margin: 100px auto;
+    margin: 5px auto;
+    margin-top: 120px;
     max-width: 900px;
     border: 1px solid #ddd;
     border-radius: 5px;
